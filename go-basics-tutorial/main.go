@@ -2,25 +2,18 @@ package main
 
 import "fmt"
 
+type User struct {
+	Name     string
+	Age      int
+	IsActive bool
+}
+
 func main() {
+	fmt.Println("structs")
 
-	var array [5]string
 
-	array[0] = "firstUser"
-	array[1] = "secondUser"
-	array[2] = "thirdUser"
-	array[3] = "fourthUser"
-	array[4] = "fifthUser"
+	firstUser := User{Name: "firstUser", Age: 5, IsActive: true}
 
-	fmt.Println(array)
+	fmt.Printf("%#v",firstUser)
 
-	slice := []int{1, 2, 3, 4, 5}
-
-	fmt.Println(slice)
-
-	myMap := make(map[string]int)
-
-	myMap["first"] = 1
-
-	fmt.Println(myMap)
 }
