@@ -4,10 +4,23 @@ import "fmt"
 
 func main() {
 
-	message := greet("Saadat")
-	fmt.Println(message)
-}
+	var array [5]string
 
-func greet(name string) string {
-	return fmt.Sprintf("Hello %v!", name)
+	array[0] = "firstUser"
+	array[1] = "secondUser"
+	array[2] = "thirdUser"
+	array[3] = "fourthUser"
+	array[4] = "fifthUser"
+
+	fmt.Println(array)
+
+	slice := []int{1, 2, 3, 4, 5}
+
+	fmt.Println(slice)
+
+	myMap := make(map[string]int)
+
+	myMap["first"] = 1
+
+	fmt.Println(myMap)
 }
