@@ -2,23 +2,32 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 )
 
+const url = "https://chaicode.com"
+
 func main() {
+	fmt.Println("LCO web request")
 
-	ch := make(chan int)
+	res, err := http.Get(url)
 
-	go func() {
-		for i := 0; i < 5; i++ {
-			ch <- i
-		}
-		close(ch)
-	}()
+	if err != nil {
+		panic(err)
+	}
 
-	func() {
-		for i := range ch {
-			fmt.Println(i)
-		}
-	}()
+	fmt.Printf("Response if of type %T\n", res)
 
+	defer res.Body.Close()
+
+	dataBytes, err := io.ReadAll(res.Body)
+
+	if err != nil {
+		panic(err)
+	}
+
+	content := string(dataBytes)
+
+	fmt.Println(content)
 }
