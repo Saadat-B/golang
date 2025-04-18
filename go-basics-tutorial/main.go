@@ -2,32 +2,36 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"net/http"
+	"net/url"
 )
 
-const url = "https://chaicode.com"
+const myurl string = "https://lco.dev:3000/learn?coursename=reactjs&paymentid=hsdif4343"
 
 func main() {
-	fmt.Println("LCO web request")
 
-	res, err := http.Get(url)
+	// fmt.Println("Welcome to handling URLS in golang")
+	fmt.Println(myurl)
 
-	if err != nil {
-		panic(err)
-	}
+	//parsing
 
-	fmt.Printf("Response if of type %T\n", res)
-
-	defer res.Body.Close()
-
-	dataBytes, err := io.ReadAll(res.Body)
+	result, err := url.Parse(myurl)
 
 	if err != nil {
 		panic(err)
 	}
 
-	content := string(dataBytes)
+	fmt.Println(result.Scheme)
+	fmt.Println(result.Host)
+	fmt.Println(result.Path)
+	fmt.Println(result.Query())
+	fmt.Println(result.Port())
 
-	fmt.Println(content)
+	qparams := result.Query()
+
+	fmt.Println(qparams["coursename"])
+
+	for key, val := range qparams {
+		fmt.Println(key, val)
+	}
+
 }
