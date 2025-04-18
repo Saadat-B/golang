@@ -2,36 +2,34 @@ package main
 
 import (
 	"fmt"
-	"net/url"
+	"io"
+	"net/http"
 )
 
-const myurl string = "https://lco.dev:3000/learn?coursename=reactjs&paymentid=hsdif4343"
+const myurl = "https://api.freeapi.app/api/v1/public/quotes/quote/random"
 
 func main() {
+	fmt.Println("Welcome to web verb video ")
 
-	// fmt.Println("Welcome to handling URLS in golang")
-	fmt.Println(myurl)
+	PerformGetRequest(myurl)
+}
 
-	//parsing
+func PerformGetRequest(myurl string) {
 
-	result, err := url.Parse(myurl)
+	response, err := http.Get(myurl)
 
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Println(result.Scheme)
-	fmt.Println(result.Host)
-	fmt.Println(result.Path)
-	fmt.Println(result.Query())
-	fmt.Println(result.Port())
+	defer response.Body.Close()
 
-	qparams := result.Query()
+	data, _ := io.ReadAll(response.Body)
 
-	fmt.Println(qparams["coursename"])
+	content := string(data)
 
-	for key, val := range qparams {
-		fmt.Println(key, val)
-	}
+	fmt.Println(content)
+	fmt.Println("status code", response.StatusCode)
+	fmt.Println("content length", response.ContentLength)
 
 }
