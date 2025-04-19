@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -16,7 +17,8 @@ func main() {
 	fmt.Println("Welcome to web verb video ")
 
 	// PerformGetRequest(geturl)
-	PerformPostRequest(posturl)
+	// PerformPostRequest(posturl)
+	PerformPostFormRequest(posturl)
 }
 
 func PerformGetRequest(myurl string) {
@@ -70,4 +72,33 @@ func PerformPostRequest(myurl string) {
 	}
 
 	fmt.Print(prettyJSON.String())
+}
+
+func PerformPostFormRequest(myurl string) {
+	data := url.Values{}
+
+	data.Add("email", "saadatbad.email@domain.com")
+	data.Add("password", "ADMItestN")
+	data.Add("username", "saadadtba")
+	data.Add("role", "ADMIN")
+
+	response, err := http.PostForm(myurl, data)
+
+	if err != nil {
+		panic(err)
+	}
+	defer response.Body.Close()
+
+	content, _ := io.ReadAll(response.Body)
+
+	var prettyJSON bytes.Buffer
+
+	err = json.Indent(&prettyJSON, content, "", " ")
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(prettyJSON.String())
+
 }
